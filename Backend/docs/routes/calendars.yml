@@ -1,0 +1,117 @@
+/calendars:
+  get:
+    tags:
+      - Calendars
+    summary: Get all calendars
+    responses:
+      200:
+        description: List of calendars
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Calendar"
+  post:
+    tags:
+      - Calendars
+    summary: Create a new calendar
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Calendar"
+    responses:
+      201:
+        description: Calendar created successfully
+      401:
+        description: Unauthorized
+      403:
+        description: Forbidden
+      500:
+        description: Server error
+
+/calendars/{id}:
+  get:
+    tags:
+      - Calendars
+    summary: Get calendar by ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: Calendar found
+      404:
+        description: Calendar not found
+  put:
+    tags:
+      - Calendars
+    summary: Update calendar
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Calendar"
+    responses:
+      200:
+        description: Calendar updated successfully
+      401:
+        description: Unauthorized
+      403:
+        description: Forbidden
+      404:
+        description: Calendar not found
+  delete:
+    tags:
+      - Calendars
+    summary: Delete calendar
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: Calendar deleted successfully
+      401:
+        description: Unauthorized
+      403:
+        description: Forbidden
+      404:
+        description: Calendar not found
+
+/calendars/{id}/export:
+  get:
+    tags:
+      - Calendars
+    summary: Export calendar with events
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: Calendar exported successfully
+      404:
+        description: Calendar not found
